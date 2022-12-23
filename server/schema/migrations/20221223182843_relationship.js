@@ -3,15 +3,13 @@
  * @returns { Promise<void> }
  */
 exports.up = function (knex) {
-	return knex.schema.createTable('users', (table) => {
+	return knex.schema.createTable('relations', (table) => {
 		table.increments('id').primary();
-		table.string('name').notNullable();
-		table.string('username').notNullable().unique();
-		table.string('password').notNullable();
+		table.integer('follower_id').references('id').inTable('users');
+		table.integer('followed_id').references('id').inTable('users');
 		table.dateTime('created_at').notNullable().defaultTo(knex.fn.now());
 		table.dateTime('updated_at').notNullable().defaultTo(knex.fn.now());
-		table.string('slug').unique();
-	});
+	})
 };
 
 /**
@@ -19,5 +17,5 @@ exports.up = function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = function (knex) {
-	return knex.schema.dropTableIfExists('users');
+	return knex.schema.dropSchemaIfExists('relations');
 };
