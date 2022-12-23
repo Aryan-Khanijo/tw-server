@@ -6,9 +6,11 @@ const app = express();
 const path = require('path')
 const router = require('./routes/index.routes');
 const PORT = process.env.PORT;
+// const knex = require('./schema/knex');
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../Resource/mess.html'));
+    // console.log(await knex.raw('SELECT * FROM pg_catalog.pg_tables'));
+    res.sendFile(path.join(__dirname, '../resource/message.html'));
 })
 
 app.use('/api', router);

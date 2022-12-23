@@ -1,11 +1,12 @@
 'use-strict';
 
 const express = require('express');
-const router = express.Router();
+const routes = express.Router();
+const userRoutes = require('./user.routes');
 
 
-router.use('/user');
-router.use('/post');
-router.use()
+routes.use('/user', userRoutes);
+// router.use('/post');
+// router.use()
 
-module.exports = router;
+module.exports = routes;
