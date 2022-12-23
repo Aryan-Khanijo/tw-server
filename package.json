@@ -1,0 +1,29 @@
+{
+  "name": "tw-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./server/index.js",
+    "dev": "nodemon ./server/index.js",
+    "db:migration": "knex migration:make",
+    "db:migrate": "knex migrate:latest",
+    "db:rollback": "knex migrate:rollback",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Aryan-Khanijo",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "email-validator": "^2.0.4",
+    "express": "^4.18.2",
+    "express-jwt": "^8.2.0",
+    "knex": "^2.3.0",
+    "pg": "^8.8.0",
+    "serialize-error": "^11.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
