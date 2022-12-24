@@ -6,6 +6,12 @@ const jwt = require('jsonwebtoken');
 
 module.exports = class UserService extends ViewService {
 
+	/**
+	 * @description Creates an instance of UserService.
+	 * @memberof UserService
+	 * @constructor
+	 * @extends ViewService
+	 */
 	constructor() {
 		super('users', 'user_info_view');
 	}
@@ -23,7 +29,12 @@ module.exports = class UserService extends ViewService {
 			if (user) {
 				const isMatch = await bcrypt.compare(password, user.password);
 				if (isMatch) {
-					const userInfo = await this.getSingleFromView('user_id', user.id);
+					const options = {
+						conditions: [
+							{'column': 'user_id', 'values': [user.id]}
+						]
+					}
+					const userInfo = await this.getSingleFromView(options);
 					return userInfo;
 				}
 			}

@@ -5,6 +5,14 @@ const UserDb = new UserService();
 
 module.exports = class SignupMiddleware {
 
+	/**
+	 * @description Validates the signup request
+	 * @static
+	 * @param {*} req 
+	 * @param {*} res 
+	 * @param {*} next 
+	 * @returns 
+	 */
 	static async validateSignup(req, res, next) {
 		const { password, username } = req.body;
 		if (!password || !username) {

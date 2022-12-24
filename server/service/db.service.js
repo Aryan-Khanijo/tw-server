@@ -3,6 +3,13 @@ const { getOffset } = require('../utils/getOffest');
 
 module.exports = class BaseDbService {
 
+	/**
+	 * @description Creates an instance of BaseDbService.
+	 * @param {string} model
+	 * @param {string} view
+	 * @memberof BaseDbService
+	 * @constructor
+	 */
 	constructor(model, view) {
 		this.model = model;
 		this.view = view;

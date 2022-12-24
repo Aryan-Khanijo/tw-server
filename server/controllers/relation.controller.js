@@ -6,10 +6,24 @@ const { relationModel } = require('../schema/models/relation.model');
 
 module.exports = class RelationController extends BaseController {
 
+	/**
+	 * @description Creates an instance of RelationController.
+	 * @param {RelationService} service
+	 * @memberof RelationController
+	 * @constructor
+	 * @extends BaseController
+	 */
 	constructor(service = RelationService) {
 		super(service, relationModel, 'relations');
 	}
 
+	/**
+	 * @description Get all relations
+	 * @param {*} id
+	 * @returns {object} response
+	 * @memberof RelationController
+	 * @async
+	 */
 	async _getRelations(id) {
 		try {
 			const result = await this.getAllView('user_id', id);
@@ -19,6 +33,14 @@ module.exports = class RelationController extends BaseController {
 		}
 	}
 
+	/**
+	 * @description Get all relations
+	 * @param {*} req
+	 * @param {*} res
+	 * @returns {object} response
+	 * @memberof RelationController
+	 * @async
+	 */
 	async getRelation(req, res, relation) {
 		try {
 			if (!this._validateRequest(req, res))

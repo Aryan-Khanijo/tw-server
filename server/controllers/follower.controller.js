@@ -4,15 +4,35 @@ const RelationController = require("./relation.controller");
 const FollowerService = require("../service/follower.service");
 
 module.exports = class FollowingController extends RelationController {
+	
+	/**
+	 * @description Creates an instance of FollowerController.
+	 * @memberof FollowerController
+	 * @constructor
+	 * @extends RelationController
+	 */
 	constructor() {
 		super(FollowerService);
 	}
 
-	async getFollower(req, res) {
+	/**
+	 * @description Get all followers
+	 * @param {*} req 
+	 * @param {*} res 
+	 */
 
+	async getFollower(req, res) {
 		await this.getRelation(req, res, 'follower');
 	}
 
+	/**
+	 * @description Add a follower
+	 * @param {*} req
+	 * @param {*} res
+	 * @returns {object} response
+	 * @memberof FollowerController
+	 * @async
+	 */
 	async addFollower(req, res) {
 		try {
 			if (!this._validateRequest(req, res))
@@ -29,6 +49,15 @@ module.exports = class FollowingController extends RelationController {
 			return this.httpResponse(res, 500, 'error', 'Internal server error');
 		}
 	}
+
+	/**
+	 * @description Delete a follower
+	 * @param {*} req
+	 * @param {*} res
+	 * @returns {object} response
+	 * @memberof FollowerController
+	 * @async
+	 */
 
 	async deleteFollower(req, res) {
 		try {

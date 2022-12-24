@@ -7,11 +7,26 @@ const FollowerService = require('../service/follower.service');
 const { options } = require('../routes/tweet.routes');
 
 module.exports = class TweetController extends BaseController {
+	
+	/**
+	 * @description Creates an instance of TweetController.
+	 * @memberof TweetController
+	 * @constructor
+	 * @extends BaseController
+	 */
 	constructor() {
 		super(TweetService, tweetModel, 'tweets');
 		this.followerService = new FollowerService();
 	}
 
+	/**
+	 * @description Get all tweets
+	 * @param {*} req
+	 * @param {*} res
+	 * @returns {object} response
+	 * @memberof TweetController
+	 * @async
+	 */
 	async getFeed(req, res) {
 		try	{
 			if (!this._validateRequest(req, res))
@@ -33,6 +48,14 @@ module.exports = class TweetController extends BaseController {
 		}
 	}
 
+	/**
+	 * @description Get all tweets
+	 * @param {*} req
+	 * @param {*} res
+	 * @returns {object} response
+	 * @memberof TweetController
+	 * @async
+	 */
 	async getTweets(req, res) {
 		try {
 			if (!this._validateRequest(req, res))
@@ -58,6 +81,14 @@ module.exports = class TweetController extends BaseController {
 		}
 	}
 
+	/**
+	 * @description Create a tweet
+	 * @param {*} req
+	 * @param {*} res
+	 * @returns {object} response
+	 * @memberof TweetController
+	 * @async
+	 */
 	async createTweet(req, res) {
 		try {
 			if (!this._validateRequest(req, res))
@@ -73,6 +104,14 @@ module.exports = class TweetController extends BaseController {
 		}
 	}
 
+	/**
+	 * @description Update a tweet
+	 * @param {*} req
+	 * @param {*} res
+	 * @returns {object} response
+	 * @memberof TweetController
+	 * @async
+	 */
 	async getTweet(req, res) {
 		try {
 			

@@ -3,11 +3,29 @@ const { httpResponse } = require('../utils/httpRes');
 
 module.exports = class BaseController {
 
+	/**
+	 * @description Creates an instance of BaseController.
+	 * @param {Object} service
+	 * @param {Object} model
+	 * @param {String} table
+	 * @memberof BaseController
+	 * @constructor
+	 */
 	constructor(service, model, table) {
 		this.service = new service();
 		this.model = model;
 		this.table = table;
 	}
+
+	/**
+	 * 
+	 * @description This function is to validate the request
+	 * @param {*} req
+	 * @param {*} res
+	 * @returns {Boolean}
+	 * @memberof BaseController
+	 *
+	 */
 
 	_validateRequest(req, res) {
 		const reqId = req.user.user_id;
@@ -40,6 +58,13 @@ module.exports = class BaseController {
 		}
 	}
 
+	/**
+	 * @description This function is to get all records from the database
+	 * @param {*} options
+	 * @returns {Array}
+	 * @memberof BaseController
+	 * @async
+	 */
 	async getAll(options) {
 		try {
 			const result = await this.service.getAll(options);
@@ -77,12 +102,25 @@ module.exports = class BaseController {
 	 */
 	async getSingleView(column, id) {
 		try {
-			const result = await this.service.getSingleFromView(column, id);
+			const options = {
+				conditions: [
+					{'column': column, 'values': [user.id]}
+				]
+			}
+			const result = await this.service.getSingleFromView(options);
 			return result;
 		} catch (err) {
 			console.log(err);
 		}
 	}
+
+	/**
+	 * @description This function is to get all records from the database
+	 * @param {*} column
+	 * @param {*} id
+	 * @returns {Array}
+	 * @async
+	 */
 
 	async getAllView(column, id) {
 		try {
@@ -93,6 +131,13 @@ module.exports = class BaseController {
 		}
 	}
 
+	/**
+	 * 
+	 * @description This function is to delete record from the database
+	 * @param {*} data
+	 * @returns {Array}
+	 * 
+	 */
 	async delete(data) {
 		try {
 			const result = await this.service.delete(data);
@@ -103,6 +148,15 @@ module.exports = class BaseController {
 	}
 
 
+	/**
+	 * @description This function calls httpResponse Utility
+	 * @param {*} res
+	 * @param {*} status
+	 * @param {*} message
+	 * @param {*} data
+	 * @returns {Object}
+	 * @memberof BaseController
+	 */
 	httpResponse(res, status, message, data) {
 		return httpResponse(res, status, message, data);
 	}

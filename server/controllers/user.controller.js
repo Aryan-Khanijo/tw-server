@@ -7,6 +7,13 @@ const bycrpt = require("bcrypt");
 
 module.exports = class UserController extends BaseController {
 
+	/**
+	 * @description Creates an instance of UserController.
+	 * @param {UserService} service
+	 * @memberof UserController
+	 * @constructor
+	 * @extends BaseController
+	 */
 	constructor() {
 		super(UserService, UserModel, 'users');
 	}
@@ -24,7 +31,7 @@ module.exports = class UserController extends BaseController {
 					access_token,
 					expiresAt: new Date(new Date().getTime() + 8 * 60 * 60 * 1000)
 				};
-				return this.httpResponse(res, 200, 'success', 'Login successful', data);
+				return this.httpResponse(res, 200, 'Login successful', data);
 			}
 			return this.httpResponse(res, 401, 'error', 'Invalid credentials');
 		} catch (err) {
