@@ -1,6 +1,7 @@
 'use strict';
 
 const ViewService = require('./view.service');
+const UserService = require('./user.service');
 
 module.exports = class RelationService extends ViewService {
 	constructor(view){
