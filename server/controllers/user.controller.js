@@ -1,6 +1,6 @@
 'use strict';
 
-const { createUserModel } = require("../schema/models/user.model");
+const { UserModel } = require("../schema/models/user.model");
 const UserService = require("../service/user.service");
 const BaseController = require("./base.controller");
 const bycrpt = require("bcrypt");
@@ -8,7 +8,7 @@ const bycrpt = require("bcrypt");
 module.exports = class UserController extends BaseController {
 
 	constructor() {
-		super(UserService, createUserModel, 'users');
+		super(UserService, UserModel, 'users');
 	}
 
 

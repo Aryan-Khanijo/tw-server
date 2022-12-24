@@ -2,7 +2,7 @@
 
 const { getSlug } = require('../../utils/createSlug');
 
-const createUserModel = (name, username, password, isAdmin = false) => {
+const UserModel = (name, username, password, isAdmin = false) => {
 	const slug = getSlug(name);
 	return {
 		name,
@@ -13,4 +13,4 @@ const createUserModel = (name, username, password, isAdmin = false) => {
 	};
 }
 
-module.exports = { createUserModel };
+module.exports = { UserModel };

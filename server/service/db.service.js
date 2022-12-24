@@ -1,4 +1,5 @@
 const knex = require('../schema/knex');
+const { getOffset } = require('../utils/getOffest');
 
 module.exports = class BaseDbService {
 
@@ -12,7 +13,7 @@ module.exports = class BaseDbService {
 	 * @returns {Object}
 	*/
 	_evaluateOptions(options) {
-		let cols = [], order = {}, conditions = [], limit = 1, model = this.model;
+		let cols = [], order = {}, conditions = [], limit = 1, offset = null;
 		if (options.cols)
 			cols.push(...options.cols);
 		if (options.order) {
@@ -28,7 +29,9 @@ module.exports = class BaseDbService {
 			conditions = options.conditions
 		if (options.limit)
 			limit = options.limit
-		return { cols, order, conditions, limit };
+		if (options.page)
+			offset = getOffset(options.page, options.limit);
+		return { cols, order, conditions, limit, offset };
 	}
 
 	/**
@@ -109,7 +112,7 @@ module.exports = class BaseDbService {
 	 * 
 	 */
 	_getSelectQuery(options) {
-		const { cols, order, conditions, limit } = this._evaluateOptions(options);
+		const { cols, order, conditions, limit, offset } = this._evaluateOptions(options);
 		let conditionArray = [];
 		let conditionString = '';
 		let query = 'Select ';
@@ -126,13 +129,18 @@ module.exports = class BaseDbService {
 					conditionArray.push(`"${condition.column}" = '${condition.values[0]}' `);
 			});
 		}
+		if (conditionArray.length)
+			conditionString += `where ${conditionArray.join('and')} `;
+
 		if (order?.column) {
 			conditionString += `order by ${order.column} ${order.atr} `;
 		}
-		if (conditionArray.length)
-			conditionString += `where ${conditionArray.join('and')} `;
+		
 		if (conditionString.length)
-			query += `where ${conditionString}`;
+			query += `${conditionString}`;
+
+		if (offset)
+			query += `OFFSET ${offset} `;
 
 		if (limit)
 			query += `LIMIT ${limit}`;

@@ -7,9 +7,11 @@ const UserCRUD = new UserController();
 const AuthMiddleware = require('../middlewares/auth.middleware');
 const FollowingController = require('../controllers/following.controller');
 const FollowerController = require('../controllers/follower.controller');
-const router = require('./auth.routes');
+const tweetRoutes = require('./tweet.routes');
 const FollowingCRUD = new FollowingController();
 const FollowerCRUD = new FollowerController();
+
+routes.use('/:id/tweets', tweetRoutes);
 
 routes.get('/:id', AuthMiddleware.verifyToken, async (req, res) => {
 	await UserCRUD.getUser(req, res);

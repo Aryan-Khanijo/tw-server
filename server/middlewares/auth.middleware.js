@@ -25,7 +25,8 @@ module.exports = class AuthMiddleware {
 
 	static async verifyUser(req, res, next) {
 		await AuthMiddleware._verifyToken(req, res);
-		if (req.user.user_id != req.params.id) {
+		const reqId = req.user.user_id;
+		if (req.user.user_id != reqId) {
 			return httpResponse(res, 403, 'Forbidden');
 		}
 		next();

@@ -10,11 +10,12 @@ module.exports = class BaseController {
 	}
 
 	_validateRequest(req, res) {
-		if (!req.params.id) {
+		const reqId = req.user.user_id;
+		if (!reqId) {
 			this.httpResponse(res, 400, 'error', 'User id is required');
 			return false
 		}
-		if (isNaN(parseInt(req.params.id)) || req.params.id === '0') {
+		if (isNaN(parseInt(reqId)) || reqId === '0') {
 			this.httpResponse(res, 400, 'error', 'User id must be a valid number');
 			return false
 		}
@@ -33,11 +34,21 @@ module.exports = class BaseController {
 	 */
 	async getSingle(options) {
 		try {
-			await this.service.getSingle(options);
+			return await this.service.getSingle(options);
 		} catch (err) {
 			console.log(err);
 		}
 	}
+
+	async getAll(options) {
+		try {
+			const result = await this.service.getAll(options);
+			return result;
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
 
 	/**
 	 * @description This function is to get all records from the database

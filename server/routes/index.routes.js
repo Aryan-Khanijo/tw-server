@@ -8,7 +8,5 @@ const userRoutes = require('./user.routes');
 
 routes.use('/auth', authRoutes);
 routes.use('/user', userRoutes);
-// router.use('/user', userRoutes);
-// router.use()
 
 module.exports = routes;

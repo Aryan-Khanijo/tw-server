@@ -19,11 +19,22 @@ module.exports = class ViewService extends DbService {
 		}
 	}
 
-	async getAllFromView(column, id) {
+	async getAllFromViewById(column, id) {
 		try {
 			const query = `SELECT * FROM ${this.views} WHERE ${column} = ${id}`;
 			const result = await this._runQuery(query);
 			return result;
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
+	async getAllFromViewByMany(column, values) {
+		try {
+			const query = `SELECT * FROM ${this.views} WHERE ${column} IN (${values.join(',')})`;
+			const result = await this._runQuery(query);
+			return result;
+
 		} catch (err) {
 			console.log(err);
 		}

@@ -1,6 +1,6 @@
 'use strict';
 
-const relation = (follower_id, followed_id) => {
+const relationModel = (follower_id, followed_id) => {
 	return {
 		follower_id,
 		followed_id
@@ -8,5 +8,5 @@ const relation = (follower_id, followed_id) => {
 }
 
 module.exports = {
-	relation
+	relationModel
 };

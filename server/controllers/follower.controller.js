@@ -18,7 +18,7 @@ module.exports = class FollowingController extends RelationController {
 			if (!this._validateRequest(req, res))
 				return;
 			const followed_id = req.body.followed_id;
-			const follower_id = req.params.id;
+			const follower_id = req.user.user_id;
 			const relation = this.model(follower_id, followed_id);
 			const result = await this.create(relation);
 			if (result) {
@@ -35,7 +35,7 @@ module.exports = class FollowingController extends RelationController {
 			if (!this._validateRequest(req, res))
 				return;
 			const followed_id = req.body.followed_id;
-			const follower_id = req.params.id;
+			const follower_id = req.user.user_id;
 			const relation = this.model(follower_id, followed_id);
 			const result = await this.delete(relation);
 			if (result) {

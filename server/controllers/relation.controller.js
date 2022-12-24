@@ -2,12 +2,12 @@
 
 const BaseController = require('../controllers/base.controller');
 const RelationService = require('../service/relation.service');
-const { relation } = require('../schema/models/relation.model');
+const { relationModel } = require('../schema/models/relation.model');
 
 module.exports = class RelationController extends BaseController {
 
 	constructor(service = RelationService) {
-		super(service, relation, 'relations');
+		super(service, relationModel, 'relations');
 	}
 
 	async _getRelations(id) {
@@ -23,11 +23,11 @@ module.exports = class RelationController extends BaseController {
 		try {
 			if (!this._validateRequest(req, res))
 				return;
-			const relations = await this.service.getRelation(req.params.id);
+			const relations = await this.service.getRelation(req.user.user_id);
 			if (relations.length === 0) {
 				return this.httpResponse(res, 204, 'success', `No ${relation} found`);
 			}
-			return this.httpResponse(res, 200, 'success', `${relation} Found`, relations);
+			return this.httpResponse(res, 200, 'success', relations);
 		} catch (err) {
 			console.log(err);
 			return this.httpResponse(res, 500, 'error', 'Internal server error');

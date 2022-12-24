@@ -12,11 +12,12 @@ module.exports = class RelationService extends ViewService {
 
 	async getRelation(id) {
 		try {
-			const result = await this.getAllFromView('user_id', id);
+			const result = await this.getAllFromViewById('user_id', id);
 			if (result.length === 0) {
 				return [];
 			}
-			const relation = await this.userService.getAllFromView('user_id', result);
+			const ids = result[0].following;
+			const relation = await this.userService.getAllFromViewByMany('user_id', ids);
 			return relation;
 		} catch (err) {
 			console.log(err);
