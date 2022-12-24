@@ -38,7 +38,7 @@ module.exports = class UserController extends BaseController {
 			const hash = await bycrpt.hash(password, 10);
 			const user = this.model(name, username, hash);
 			const newUser = await this.service.register(user);
-			if(!newUser){
+			if (!newUser) {
 				return this.httpResponse(res, 400, 'error', 'User already exists');
 			}
 			return this.httpResponse(res, 201, 'success', 'User created', newUser);
@@ -53,10 +53,10 @@ module.exports = class UserController extends BaseController {
 			if (!this._validateRequest(req, res))
 				return;
 			const user = await this.getSingleView('user_id', req.params.id);
-			if(!user){
+			if (!user) {
 				return this.httpResponse(res, 404, 'error', 'User not found');
 			}
-			return this.httpResponse(res, 200, 'success', 'User found', user);
+			return this.httpResponse(res, 200, 'User Found', user);
 		} catch (err) {
 			console.log(err);
 			return this.httpResponse(res, 500, 'error', 'Internal server error');

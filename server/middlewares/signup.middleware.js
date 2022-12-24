@@ -7,7 +7,7 @@ module.exports = class SignupMiddleware {
 
 	static async validateSignup(req, res, next) {
 		const { password, username } = req.body;
-		if ( !password || !username) {
+		if (!password || !username) {
 			return res.status(400).json({
 				message: 'Please fill in all fields'
 			});
@@ -19,7 +19,7 @@ module.exports = class SignupMiddleware {
 			});
 		}
 
-		if(username.length < 3) {
+		if (username.length < 3) {
 			return res.status(400).json({
 				message: 'Username must be at least 3 characters'
 			});
@@ -36,12 +36,12 @@ module.exports = class SignupMiddleware {
 				message: 'Username must be a valid email'
 			});
 		}
-		
+
 		SignupMiddleware.checkIfUserExists(req, res);
-		
+
 		next();
 	}
-	
+
 	static async checkIfUserExists(req, res) {
 		const { username } = req.body;
 		const options = {
@@ -66,7 +66,7 @@ module.exports = class SignupMiddleware {
 				message: 'Internal server error'
 			});
 		}
-		
+
 	}
 
 

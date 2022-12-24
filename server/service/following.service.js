@@ -3,7 +3,7 @@
 const RelationService = require('../service/relation.service');
 
 module.exports = class FollowingService extends RelationService {
-	constructor(){
+	constructor() {
 		super('following_view');
 	}
 }

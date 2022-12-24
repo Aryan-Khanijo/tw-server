@@ -5,12 +5,13 @@ const { httpResponse } = require('../utils/httpRes');
 module.exports = class AuthMiddleware {
 
 	static async _verifyToken(req, res) {
-		const token = req.headers['x-access-token'];
+
+		const token = req.headers['authorization'];
 		if (!token) {
 			return httpResponse(res, 403, 'No token provided');
 		}
 		try {
-			const decoded = jwt.verify(token, process.env.JWT_SECRET);
+			const decoded = jwt.verify(token.replace('Bearer ',''), process.env.JWT_SECRET);
 			req.user = decoded.user;
 		} catch (error) {
 			return httpResponse(res, 401, 'Unauthorized');
@@ -22,7 +23,6 @@ module.exports = class AuthMiddleware {
 		next();
 	}
 
-
 	static async verifyUser(req, res, next) {
 		await AuthMiddleware._verifyToken(req, res);
 		if (req.user.user_id != req.params.id) {
@@ -30,8 +30,5 @@ module.exports = class AuthMiddleware {
 		}
 		next();
 	}
-	
-
-	
 
 }

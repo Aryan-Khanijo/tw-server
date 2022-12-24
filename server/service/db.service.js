@@ -1,8 +1,8 @@
 const knex = require('../schema/knex');
 
-module.exports = class BaseDbService{
+module.exports = class BaseDbService {
 
-	constructor(model, view){
+	constructor(model, view) {
 		this.model = model;
 		this.view = view;
 	}
@@ -28,7 +28,7 @@ module.exports = class BaseDbService{
 			conditions = options.conditions
 		if (options.limit)
 			limit = options.limit
-		return {cols, order, conditions, limit};
+		return { cols, order, conditions, limit };
 	}
 
 	/**
@@ -109,7 +109,8 @@ module.exports = class BaseDbService{
 	 * 
 	 */
 	_getSelectQuery(options) {
-		const {cols, order, conditions, limit} = this._evaluateOptions(options);
+		const { cols, order, conditions, limit } = this._evaluateOptions(options);
+		let conditionArray = [];
 		let conditionString = '';
 		let query = 'Select ';
 		if (cols.length)
@@ -117,26 +118,54 @@ module.exports = class BaseDbService{
 		else
 			query += '* ';
 		query += `from ${this.model} `;
-		if (conditions?.length){
+		if (conditions?.length) {
 			conditions.forEach((condition) => {
 				if (condition.type)
-					conditionString += `"${condition.column}" ${condition.type} (${condition.values.join(',')}) `;
+					conditionArray.push(`"${condition.column}" ${condition.type} (${condition.values.join(',')}) `);
 				else
-					conditionString += `"${condition.column}" = '${condition.values[0]}' `;
+					conditionArray.push(`"${condition.column}" = '${condition.values[0]}' `);
 			});
 		}
 		if (order?.column) {
 			conditionString += `order by ${order.column} ${order.atr} `;
 		}
+		if (conditionArray.length)
+			conditionString += `where ${conditionArray.join('and')} `;
 		if (conditionString.length)
 			query += `where ${conditionString}`;
 
 		if (limit)
 			query += `LIMIT ${limit}`;
-		
+
 		query += ';';
-		
+
 		return query;
+	}
+
+	_getDeleteQuery(options) {
+		const { conditions } = this._evaluateOptions(options);
+		let conditionString = [];
+		let query = `Delete from ${this.model} `;
+		if (conditions?.length) {
+			conditions.forEach((condition) => {
+				if (condition.type)
+					conditionString.push(`"${condition.column}" ${condition.type} (${condition.values.join(',')}) `);
+				else
+					conditionString.push(`"${condition.column}" = '${condition.values[0]}' `);
+			});
+		}
+		if (conditionString.length)
+			query += `where ${conditionString.join('and')}`;
+
+		query += ';';
+
+		return query;
+	}
+
+	async _delete(options) {
+		const query = this._getDeleteQuery(options);
+		const result = await this._runQuery(query);
+		return result;
 	}
 
 }

@@ -6,22 +6,24 @@ const jwt = require('jsonwebtoken');
 
 module.exports = class UserService extends ViewService {
 
-	constructor(){
+	constructor() {
 		super('users', 'user_info_view');
 	}
 
 	async login(username, password) {
 		try {
-			const user = await this.getSingle({ conditions: [
-				{
-					'column': 'username',
-					'values': [username]
-				}
-			]});
+			const user = await this.getSingle({
+				conditions: [
+					{
+						'column': 'username',
+						'values': [username]
+					}
+				]
+			});
 			if (user) {
 				const isMatch = await bcrypt.compare(password, user.password);
 				if (isMatch) {
-					const userInfo = await this.getSingleFromView('user_id',user.id);
+					const userInfo = await this.getSingleFromView('user_id', user.id);
 					return userInfo;
 				}
 			}

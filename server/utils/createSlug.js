@@ -6,4 +6,4 @@ const getSlug = (name) => {
 	return slug;
 };
 
-module.exports = {getSlug};
+module.exports = { getSlug };

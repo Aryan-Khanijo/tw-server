@@ -3,7 +3,7 @@ const { httpResponse } = require('../utils/httpRes');
 
 module.exports = class BaseController {
 
-	constructor(service, model, table){
+	constructor(service, model, table) {
 		this.service = new service();
 		this.model = model;
 		this.table = table;
@@ -18,7 +18,7 @@ module.exports = class BaseController {
 			this.httpResponse(res, 400, 'error', 'User id must be a valid number');
 			return false
 		}
-		
+
 		return true;
 	}
 
@@ -31,12 +31,12 @@ module.exports = class BaseController {
 	 * @async
 	 * 
 	 */
-	async getSingle (options) {
+	async getSingle(options) {
 		try {
 			await this.service.getSingle(options);
 		} catch (err) {
 			console.log(err);
-		} 
+		}
 	}
 
 	/**
@@ -48,7 +48,7 @@ module.exports = class BaseController {
 	 * @async
 	 * 
 	 */
-	async create (data) {
+	async create(data) {
 		try {
 			const result = await this.service._create(data);
 			return result;
@@ -56,7 +56,7 @@ module.exports = class BaseController {
 			console.log(err);
 		}
 	}
-	
+
 	/**
 	 * @description This function is to get all records from the database
 	 * @param {*} column
@@ -64,7 +64,7 @@ module.exports = class BaseController {
 	 * @returns {Object}
 	 * @async
 	 */
-	async getSingleView (column, id) {
+	async getSingleView(column, id) {
 		try {
 			const result = await this.service.getSingleFromView(column, id);
 			return result;
@@ -73,7 +73,7 @@ module.exports = class BaseController {
 		}
 	}
 
-	async getAllView (column, id) {
+	async getAllView(column, id) {
 		try {
 			const result = await this.service.getAllFromView(column, id);
 			return result;
@@ -82,8 +82,17 @@ module.exports = class BaseController {
 		}
 	}
 
+	async delete(data) {
+		try {
+			const result = await this.service.delete(data);
+			return result;
+		} catch (err) {
+			console.log(err);
+		}
+	}
 
-	httpResponse (res, status, message, data) {
+
+	httpResponse(res, status, message, data) {
 		return httpResponse(res, status, message, data);
 	}
 

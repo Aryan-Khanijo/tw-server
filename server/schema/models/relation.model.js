@@ -1,8 +1,8 @@
 'use strict';
 
-const relation = (user_id, followed_id) =>{
+const relation = (follower_id, followed_id) => {
 	return {
-		user_id,
+		follower_id,
 		followed_id
 	};
 }
