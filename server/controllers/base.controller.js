@@ -104,7 +104,7 @@ module.exports = class BaseController {
 		try {
 			const options = {
 				conditions: [
-					{'column': column, 'values': [user.id]}
+					{'column': column, 'values': [id]}
 				]
 			}
 			const result = await this.service.getSingleFromView(options);

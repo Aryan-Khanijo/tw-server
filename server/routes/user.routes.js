@@ -32,6 +32,11 @@ routes.get('/:id', AuthMiddleware.verifyToken, async (req, res) => {
 	await UserCRUD.getUser(req, res);
 });
 
+routes.get('/', AuthMiddleware.verifyToken, async (req, res) => {
+	await UserCRUD.getUserByName(req, res);
+});
+
+
 /**
  * @description Get Followers
  * @param {string} path

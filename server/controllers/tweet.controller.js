@@ -34,7 +34,7 @@ module.exports = class TweetController extends BaseController {
 			const user_id = req.user.user_id;
 			const page = req.query.$page || 1;
 			const limit = (req.query.$limit<20 && req.query.$limit) || 10;
-			const follower_ids = await this.followerService.getFollowers(user_id);
+			const follower_ids = await this.followerService.getRelationIds(user_id);
 			let tweets = [];
 			if (follower_ids.length > 0)
 				tweets = await this.service.getFeed(follower_ids, page, limit);

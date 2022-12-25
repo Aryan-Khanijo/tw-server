@@ -55,6 +55,33 @@ module.exports = class UserController extends BaseController {
 		}
 	}
 
+	async getUserByName(req, res) {
+		try {
+			if (req.params.$name === undefined) {
+				return this.httpResponse(res, 400, 'error', 'Invalid request');
+			}
+			const name = '%' + req.params.$name + '%';
+			const options = {
+				conditions: [
+					{
+						column: 'name',
+						values: [name],
+						type: 'LIKE'
+					}
+				]};
+			const users = await this.getAll(options);
+			if (!users) {
+				return this.httpResponse(res, 204, 'No users found');
+			}
+			return this.httpResponse(res, 200, 'Users found', users);
+		} catch (err) {
+			console.log(err);
+			return this.httpResponse(res, 500, 'error', 'Internal server error');
+		}
+	}
+	
+
+
 	async getUser(req, res) {
 		try {
 			if (!this._validateRequest(req, res))

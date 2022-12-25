@@ -56,7 +56,12 @@ module.exports = class RelationService extends ViewService {
 			if (ids.length === 0) {
 				return [];
 			}
-			const relations = await this.userService.getAllFromViewByMany('user_id', ids);
+			const options = {
+				conditions: [
+					{ column: 'user_id', values: ids, type: 'IN' }
+				]
+			}
+			const relations = await this.userService.getAllFromViewByMany(options);
 			return relations;
 		} catch (err) {
 			console.log(err);
