@@ -27,7 +27,7 @@ module.exports = class UserController extends BaseController {
 				const access_token = await this.service.generateToken(user);
 				const data = {
 					issuedAt: new Date(),
-					user: user.username,
+					user,
 					access_token,
 					expiresAt: new Date(new Date().getTime() + 8 * 60 * 60 * 1000)
 				};
