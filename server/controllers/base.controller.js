@@ -43,8 +43,7 @@ module.exports = class BaseController {
 
 	/**
 	 * @description This function is to get single records from the database
-	 * @param {*} req
-	 * @param {*} res
+	 * @param {*} options
 	 * @returns {Array}
 	 * @memberof BaseController
 	 * @async
