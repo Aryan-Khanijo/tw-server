@@ -25,6 +25,8 @@ COPY --from=BUILD_IMAGE /app /server
 
 WORKDIR /server
 
+RUN npm run db:migrate
+
 # Actually run the service
 EXPOSE 1369/tcp
 CMD [ "npm", "start" ]
