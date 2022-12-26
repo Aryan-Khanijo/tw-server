@@ -32,11 +32,11 @@ module.exports = class BaseDbService {
 				order.column = options.order;
 			}
 		}
-		if (options.conditions.length)
+		if (options?.conditions?.length)
 			conditions = options.conditions
-		if (options.limit)
+		if (options?.limit)
 			limit = options.limit
-		if (options.page)
+		if (options?.page)
 			offset = getOffset(options.page, options.limit);
 		return { cols, order, conditions, limit, offset };
 	}

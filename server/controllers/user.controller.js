@@ -55,20 +55,16 @@ module.exports = class UserController extends BaseController {
 		}
 	}
 
-	async getUserByName(req, res) {
+	async getUsers(req, res) {
 		try {
-			if (req.params.$name === undefined) {
+			if (req.query.$page === undefined) {
 				return this.httpResponse(res, 400, 'error', 'Invalid request');
 			}
-			const name = '%' + req.params.$name + '%';
 			const options = {
-				conditions: [
-					{
-						column: 'name',
-						values: [name],
-						type: 'LIKE'
-					}
-				]};
+				page: req.query.$page,
+				limit: req.query.$limit,
+				order: req.query.$order,
+			};
 			const users = await this.getAll(options);
 			if (!users) {
 				return this.httpResponse(res, 204, 'No users found');
@@ -79,7 +75,7 @@ module.exports = class UserController extends BaseController {
 			return this.httpResponse(res, 500, 'error', 'Internal server error');
 		}
 	}
-	
+
 
 
 	async getUser(req, res) {

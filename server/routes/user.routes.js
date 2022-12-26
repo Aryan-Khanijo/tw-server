@@ -33,7 +33,7 @@ routes.get('/:id', AuthMiddleware.verifyToken, async (req, res) => {
 });
 
 routes.get('/', AuthMiddleware.verifyToken, async (req, res) => {
-	await UserCRUD.getUserByName(req, res);
+	await UserCRUD.getUsers(req, res);
 });
 
 

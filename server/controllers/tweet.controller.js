@@ -4,7 +4,6 @@ const BaseController = require('./base.controller');
 const TweetService = require('../service/tweet.service');
 const { tweetModel } = require('../schema/models/tweet.model');
 const FollowerService = require('../service/follower.service');
-const { options } = require('../routes/tweet.routes');
 
 module.exports = class TweetController extends BaseController {
 	
